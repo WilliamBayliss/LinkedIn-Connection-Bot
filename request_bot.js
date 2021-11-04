@@ -32,14 +32,18 @@ connectionName = argv['_'][0] + " " + argv['_'][1];
         // Check for a button styled primary for connection request on profile
         await page.waitForSelector('.artdeco-button--primary')
         await page.click('.artdeco-button--primary')
+        // Await for another primary styled button to send the request without a message
+        await page.waitForSelector('.artdeco-button--primary')
+        await page.click('.artdeco-button--primary')
     } catch {
+      console.log("Error: No primary button found on profile");
     }
   } catch {
-    console.log("Error: View profile button not found")
+    console.log("Error: View profile button not found");
   }
 
 
-
+  browser.close();
 
 
 })();
