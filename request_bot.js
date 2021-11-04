@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer');
 const minimalist = require('minimist') 
+const dotenv = require('dotenv');
+dotenv.config();
+
 var argv = minimalist(process.argv.slice(2));
 connectionName = argv['_'][0] + " " + argv['_'][1];
 
@@ -20,21 +23,22 @@ connectionName = argv['_'][0] + " " + argv['_'][1];
   await page.waitForSelector('input[placeholder="Search"]');
   //   Change value to name from args and press enter to submit   
   await page.$eval('input[placeholder="Search"]', (searchBar, name) => searchBar.value = name, connectionName);
-  await page.keyboard.press('Enter')
+  await page.keyboard.press('Enter');
   await page.waitForNavigation();
 
 //   Check for a button styled primary to view full profile
   try {
-    await page.waitForSelector('.artdeco-button--primary')
-    await page.click('.artdeco-button--primary')
+    await page.waitForSelector('.artdeco-button--primary');
+    await page.click('.artdeco-button--primary');
     await page.waitForNavigation();
     try {
         // Check for a button styled primary for connection request on profile
-        await page.waitForSelector('.artdeco-button--primary')
-        await page.click('.artdeco-button--primary')
+        await page.waitForSelector('.artdeco-button--primary');
+        await page.click('.artdeco-button--primary');
         // Await for another primary styled button to send the request without a message
-        await page.waitForSelector('.artdeco-button--primary')
-        await page.click('.artdeco-button--primary')
+        await page.waitForSelector('.artdeco-button--primary');
+        await page.click('.artdeco-button--primary');
+        await page.wait(500);
     } catch {
       console.log("Error: No primary button found on profile");
     }
